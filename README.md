@@ -59,3 +59,30 @@
   ]
 }
 ```
+
+## Setup
+
+### App Registration
+
+- Create a new App Registration in Azure Active Directory
+- Add and consent these **Application** permissions:
+    - TermStore.Read.All
+    - TermStore.ReadWrite.All
+
+To allow the App Registration to **create**/**remove** terms in Term Store, the user `app@sharepoint` must be added as an administrator of your Term Store.
+AND this has to be done from the classic Term Store center : https://<your-tenant-name>-admin.sharepoint.com/_layouts/15/TermStoreManager.aspx
+
+### `local.settings.json`
+```json
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsStorage": "",
+    "GRAPH_VERSION": "beta", // term store is only available in beta as of now
+    "GRAPH_AUTH_CLIENT_ID": "app-registration-client-id",
+    "GRAPH_AUTH_SECRET": "app-registration-client-secret",
+    "TERMSTORE_SET_ID": "guid-of-term-set-to-work-on"
+  }
+}
+```
