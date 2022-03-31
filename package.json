@@ -1,0 +1,25 @@
+{
+  "name": "azf-termstore",
+  "version": "0.0.1",
+  "description": "Handle TermStore updates for VTFK",
+  "scripts": {
+    "test": "standard",
+    "lint:fix": "standard --fix",
+    "start": "func start"
+  },
+  "author": {
+    "name": "Rune Moskvil Lyngås",
+    "email": "rune.moskvil.lyngaas@vtfk.no",
+    "url": "https://github.com/runely"
+  },
+  "keywords": [
+    "termstore",
+    "microsoft",
+    "sharepoint",
+    "graph"
+  ],
+  "devDependencies": {
+    "jest": "27.5.1",
+    "standard": "16.0.4"
+  }
+}
