@@ -2,6 +2,8 @@
 
 ## `POST /UpdateTerms`
 
+**Add `?dummyRun=true` to do a WhatIf run**
+
 ### request
 
 ```json
@@ -82,7 +84,8 @@ AND this has to be done from the classic Term Store center : https://<your-tenan
     "GRAPH_VERSION": "beta", // term store is only available in beta as of now
     "GRAPH_AUTH_CLIENT_ID": "app-registration-client-id",
     "GRAPH_AUTH_SECRET": "app-registration-client-secret",
-    "TERMSTORE_SET_ID": "guid-of-term-set-to-work-on"
+    "TERMSTORE_SET_ID": "guid-of-term-set-to-work-on",
+    "JWT_SECRET": "super secret secret"
   }
 }
 ```

@@ -11,5 +11,6 @@ module.exports = {
   },
   TERMSTORE: {
     setId: process.env.TERMSTORE_SET_ID
-  }
+  },
+  JWT_SECRET: process.env.JWT_SECRET
 }

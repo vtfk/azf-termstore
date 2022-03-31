@@ -1,5 +1,6 @@
-const { logConfig, logger } = require('@vtfk/logger')
+const { logger, logConfig } = require('@vtfk/logger')
 const { uniqueValues } = require('@vtfk/utilities')
+const withTokenAuth = require('../lib/with-token-auth')
 const getGraphToken = require('../lib/graph/get-graph-token')
 const { TERMSTORE: { setId } } = require('../config')
 const { getTermSetTerms, addTermSetTerm, addTermSetTermChildTerm } = require('../lib/termstore/handle-terms')
@@ -39,15 +40,16 @@ const addLogItem = (type, log, sector, section, team) => {
   }
 }
 
-module.exports = async function (context, req) {
-  logConfig({
-    azure: { context },
-    prefix: 'termstore'
-  })
-
+const updateTermStore = async (context, req) => {
   try {
     const sectors = req.body
+    const dummyRun = !!req.query.dummyRun
     if (!sectors || !Array.isArray(sectors)) throw new HTTPError(500, 'Please pass sectors')
+    if (dummyRun) {
+      logConfig({
+        prefix: `${context.invocationId} - termstore - dummyRun`
+      })
+    }
 
     // get all terms from term set (recursively)
     const token = await getGraphToken()
@@ -69,20 +71,25 @@ module.exports = async function (context, req) {
       }
       else {
         // create sector term
-        logger('warn', ['sector', sector.Sektor, 'will be created 😱'])
-        try {
-          sectorTerm = await addTermSetTerm(token, setId, newTerm(sector.SektorId, sector.Sektor))
-          if (sectorTerm) {
-            logger('info', ['sector', sector.Sektor, sectorTerm.id, 'created 👍'])
-            addLogItem('warn', outputLog, `'${sector.Sektor}' created`)
+        if (!dummyRun) {
+          logger('warn', ['sector', sector.Sektor, 'will be created 😱'])
+          try {
+            sectorTerm = await addTermSetTerm(token, setId, newTerm(sector.SektorId, sector.Sektor))
+            if (sectorTerm) {
+              logger('info', ['sector', sector.Sektor, sectorTerm.id, 'created 👍'])
+              addLogItem('warn', outputLog, `'${sector.Sektor}' created`)
+            }
+            else {
+              logger('warn', ['sector', sector.Sektor, 'sector term not found and not created 😱'])
+              addLogItem('warn', outputLog, `'${sector.Sektor}' not found and not created`)
+            }
+          } catch (err) {
+            logger('error', ['sector', sector.Sektor, 'failed to create sector term 😡'])
+            addLogItem('warn', outputLog, `'${sector.Sektor}' failed to create sector term : ${JSON.stringify(err.message)}`)
           }
-          else {
-            logger('warn', ['sector', sector.Sektor, 'sector term not found and not created 😱'])
-            addLogItem('warn', outputLog, `'${sector.Sektor}' not found and not created`)
-          }
-        } catch (err) {
-          logger('error', ['sector', sector.Sektor, 'failed to create sector term 😡'])
-          addLogItem('warn', outputLog, `'${sector.Sektor}' failed to create sector term : ${JSON.stringify(err.message)}`)
+        } else {
+          logger('warn', ['sector', sector.Sektor, 'would be created 😱'])
+          addLogItem('warn', outputLog, `'${sector.Sektor}' would be created`)
         }
       }
 
@@ -107,20 +114,26 @@ module.exports = async function (context, req) {
         }
         else {
           // create section term
-          logger('warn', ['section', section.Seksjon, 'will be created 😱'])
-          try {
-            sectionTerm = await addTermSetTermChildTerm(token, setId, sectorTerm.id, newTerm(section.Seksjon))
-            if (sectionTerm) {
-              logger('info', ['section', section.Seksjon, sectionTerm.id, 'created 👍'])
-              addLogItem('info', outputLog, sector.Sektor, `'${section.Seksjon}' created`)
+          if (!dummyRun) {
+            logger('warn', ['section', section.Seksjon, 'will be created 😱'])
+            try {
+              sectionTerm = await addTermSetTermChildTerm(token, setId, sectorTerm.id, newTerm(section.Seksjon))
+              if (sectionTerm) {
+                logger('info', ['section', section.Seksjon, sectionTerm.id, 'created 👍'])
+                addLogItem('info', outputLog, sector.Sektor, `'${section.Seksjon}' created`)
+              }
+              else {
+                logger('warn', ['section', section.Seksjon, 'section term not found and not created 😱'])
+                addLogItem('warn', outputLog, sector.Sektor, `'${section.Seksjon}' not found and not created`)
+              }
+            } catch (err) {
+              logger('error', ['section', section.Seksjon, 'failed to create section term 😡'])
+              addLogItem('warn', outputLog, sector.Sektor, `'${section.Seksjon}' failed to create section term : ${JSON.stringify(err.message)}`)
             }
-            else {
-              logger('warn', ['section', section.Seksjon, 'section term not found and not created 😱'])
-              addLogItem('warn', outputLog, sector.Sektor, `'${section.Seksjon}' not found and not created`)
-            }
-          } catch (err) {
-            logger('error', ['section', section.Seksjon, 'failed to create section term 😡'])
-            addLogItem('warn', outputLog, sector.Sektor, `'${section.Seksjon}' failed to create section term : ${JSON.stringify(err.message)}`)
+          } else {
+            logger('warn', ['section', section.Seksjon, 'would be created 😱'])
+            addLogItem('warn', outputLog, sector.Sektor, `'${section.Seksjon}' would be created`)
+
           }
         }
 
@@ -138,20 +151,25 @@ module.exports = async function (context, req) {
           }
           else {
             // create team term
-            logger('warn', ['team', team.Team, 'will be created 😱'])
-            try {
-              teamTerm = await addTermSetTermChildTerm(token, setId, sectionTerm.id, newTerm(team.Team))
-              if (teamTerm) {
-                logger('info', ['team', team.Team, teamTerm.id, 'created 👍'])
-                addLogItem('info', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' created`)
+            if (!dummyRun) {
+              logger('warn', ['team', team.Team, 'will be created 😱'])
+              try {
+                teamTerm = await addTermSetTermChildTerm(token, setId, sectionTerm.id, newTerm(team.Team))
+                if (teamTerm) {
+                  logger('info', ['team', team.Team, teamTerm.id, 'created 👍'])
+                  addLogItem('info', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' created`)
+                }
+                else {
+                  logger('warn', ['team', team.Team, 'team term not found and not created 😱'])
+                  addLogItem('warn', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' not found and not created`)
+                }
+              } catch (err) {
+                logger('error', ['team', team.Team, 'failed to create team term 😡'])
+                addLogItem('error', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' failed to create team term : ${JSON.stringify(err.message)}`)
               }
-              else {
-                logger('warn', ['team', team.Team, 'team term not found and not created 😱'])
-                addLogItem('warn', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' not found and not created`)
-              }
-            } catch (err) {
-              logger('error', ['team', team.Team, 'failed to create team term 😡'])
-              addLogItem('error', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' failed to create team term : ${JSON.stringify(err.message)}`)
+            } else {
+              logger('warn', ['team', team.Team, 'would be created 😱'])
+              addLogItem('warn', outputLog, sector.Sektor, section.Seksjon, `'${team.Team}' would be created`)
             }
           }
         }
@@ -174,3 +192,5 @@ module.exports = async function (context, req) {
     }
   }
 }
+
+module.exports = (context, req) => withTokenAuth(context, req, updateTermStore)
