@@ -54,9 +54,9 @@
 {
   "outputLog": [
     "INFO: Processing Sector:  Brukerbehov, digitalisering og kommunikasjon",
-		"INFO: Processing Section: Brukerbehov, digitalisering og kommunikasjon / Arkiv og dokumenthåndtering",
-		"INFO: Processing Section: Brukerbehov, digitalisering og kommunikasjon / IT konserndrift og brukerstøtte",
-		"INFO: Processing Team:    Brukerbehov, digitalisering og kommunikasjon / IT konserndrift og brukerstøtte / Team konserndrift",
+    "INFO: Processing Section: Brukerbehov, digitalisering og kommunikasjon / Arkiv og dokumenthåndtering",
+    "INFO: Processing Section: Brukerbehov, digitalisering og kommunikasjon / IT konserndrift og brukerstøtte",
+    "INFO: Processing Team:    Brukerbehov, digitalisering og kommunikasjon / IT konserndrift og brukerstøtte / Team konserndrift",
     ...
   ]
 }
