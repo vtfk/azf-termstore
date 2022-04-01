@@ -62,8 +62,7 @@ const updateTermStore = async (context, req) => {
           sector: sector.Sektor,
           dummyRun
         })
-      }
-      else {
+      } else {
         // create sector term
         if (!dummyRun) {
           logger('warn', ['sector', sector.Sektor, 'will be created 😱'])
@@ -77,8 +76,7 @@ const updateTermStore = async (context, req) => {
                 message: 'created',
                 dummyRun
               })
-            }
-            else {
+            } else {
               logger('warn', ['sector', sector.Sektor, 'sector term not found and not created 😱'])
               outputLog.push({
                 type: 'WARN',
@@ -131,8 +129,7 @@ const updateTermStore = async (context, req) => {
             section: section.Seksjon,
             dummyRun
           })
-        }
-        else {
+        } else {
           // create section term
           if (!dummyRun) {
             logger('warn', ['section', section.Seksjon, 'will be created 😱'])
@@ -147,8 +144,7 @@ const updateTermStore = async (context, req) => {
                   message: 'created',
                   dummyRun
                 })
-              }
-              else {
+              } else {
                 logger('warn', ['section', section.Seksjon, 'section term not found and not created 😱'])
                 outputLog.push({
                   type: 'WARN',
@@ -178,7 +174,6 @@ const updateTermStore = async (context, req) => {
               message: 'would be created',
               dummyRun
             })
-
           }
         }
 
@@ -199,8 +194,7 @@ const updateTermStore = async (context, req) => {
               team: team.Team,
               dummyRun
             })
-          }
-          else {
+          } else {
             // create team term
             if (!dummyRun) {
               logger('warn', ['team', team.Team, 'will be created 😱'])
@@ -216,8 +210,7 @@ const updateTermStore = async (context, req) => {
                     message: 'created',
                     dummyRun
                   })
-                }
-                else {
+                } else {
                   logger('warn', ['team', team.Team, 'team term not found and not created 😱'])
                   outputLog.push({
                     type: 'WARN',
