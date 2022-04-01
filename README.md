@@ -85,7 +85,12 @@ AND this has to be done from the classic Term Store center : https://<your-tenan
     "GRAPH_AUTH_CLIENT_ID": "app-registration-client-id",
     "GRAPH_AUTH_SECRET": "app-registration-client-secret",
     "TERMSTORE_SET_ID": "guid-of-term-set-to-work-on",
-    "JWT_SECRET": "super secret secret"
+    "JWT_SECRET": "super secret secret",
+    "NODE_ENV": "production",
+    "PAPERTRAIL_DISABLE_LOGGING": "false",
+    "PAPERTRAIL_HOST": "https://logs.collector.solarwinds.com/v1/log",
+    "PAPERTRAIL_TOKEN": "secret token",
+    "PAPERTRAIL_MINIMUM_REMOTE_LEVEL": "info"
   }
 }
 ```

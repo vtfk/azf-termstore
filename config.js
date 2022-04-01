@@ -12,5 +12,7 @@ module.exports = {
   TERMSTORE: {
     setId: process.env.TERMSTORE_SET_ID
   },
-  JWT_SECRET: process.env.JWT_SECRET
+  JWT_SECRET: process.env.JWT_SECRET,
+  PAPERTRAIL_DISABLE_LOGGING: process.env.PAPERTRAIL_DISABLE_LOGGING,
+  PAPERTRAIL_MINIMUM_REMOTE_LEVEL: process.env.PAPERTRAIL_MINIMUM_REMOTE_LEVEL || undefined
 }
