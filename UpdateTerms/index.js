@@ -79,7 +79,7 @@ const updateTermStore = async (context, req) => {
             } else {
               logger('warn', ['sector', sector.Sektor, 'sector term not found and not created 😱'])
               outputLog.push({
-                type: 'WARN',
+                type: 'WARNING',
                 sector: sector.Sektor,
                 message: 'not found and not created',
                 dummyRun
@@ -98,7 +98,7 @@ const updateTermStore = async (context, req) => {
         } else {
           logger('warn', ['sector', sector.Sektor, 'would be created 😱'])
           outputLog.push({
-            type: 'WARN',
+            type: 'WARNING',
             sector: sector.Sektor,
             message: 'would be created',
             dummyRun
@@ -147,7 +147,7 @@ const updateTermStore = async (context, req) => {
               } else {
                 logger('warn', ['section', section.Seksjon, 'section term not found and not created 😱'])
                 outputLog.push({
-                  type: 'WARN',
+                  type: 'WARNING',
                   sector: sector.Sektor,
                   section: section.Seksjon,
                   message: 'not found and not created',
@@ -168,7 +168,7 @@ const updateTermStore = async (context, req) => {
           } else {
             logger('warn', ['section', section.Seksjon, 'would be created 😱'])
             outputLog.push({
-              type: 'WARN',
+              type: 'WARNING',
               sector: sector.Sektor,
               section: section.Seksjon,
               message: 'would be created',
@@ -213,7 +213,7 @@ const updateTermStore = async (context, req) => {
                 } else {
                   logger('warn', ['team', team.Team, 'team term not found and not created 😱'])
                   outputLog.push({
-                    type: 'WARN',
+                    type: 'WARNING',
                     sector: sector.Sektor,
                     section: section.Seksjon,
                     team: team.Team,
@@ -236,7 +236,7 @@ const updateTermStore = async (context, req) => {
             } else {
               logger('warn', ['team', team.Team, 'would be created 😱'])
               outputLog.push({
-                type: 'WARN',
+                type: 'WARNING',
                 sector: sector.Sektor,
                 section: section.Seksjon,
                 team: team.Team,
