@@ -3,32 +3,8 @@ const { uniqueValues } = require('@vtfk/utilities')
 const withTokenAuth = require('../lib/with-token-auth')
 const getGraphToken = require('../lib/graph/get-graph-token')
 const { TERMSTORE: { setId } } = require('../config')
-const { getTermSetTerms, addTermSetTerm, addTermSetTermChildTerm } = require('../lib/termstore/handle-terms')
+const { getTermSetTerms, addTermSetTerm, addTermSetTermChildTerm, findTermByLabel, newTerm } = require('../lib/termstore/handle-terms')
 const HTTPError = require('../lib/http-error')
-
-const findTerm = (terms, name) => terms.find(term => term.labels && term.labels.filter(label => label.name === name).length > 0)
-
-const newTerm = (name, description, languageTag = 'en-US') => {
-  const term = {
-    labels: [
-      {
-        languageTag,
-        name,
-        isDefault: true
-      }
-    ]
-  }
-  if (description) {
-    term.descriptions = [
-      {
-        description,
-        languageTag
-      }
-    ]
-  }
-
-  return term
-}
 
 const updateTermStore = async (context, req) => {
   try {
@@ -54,7 +30,7 @@ const updateTermStore = async (context, req) => {
     for (const sectorId of sectorIds) {
       // handle sector
       const sector = sectors.find(item => item.SektorId === sectorId)
-      let sectorTerm = findTerm(termSetTerms, sectorId)
+      let sectorTerm = findTermByLabel(termSetTerms, sectorId)
       if (sectorTerm) {
         logger('debug', ['sector', sector.Sektor, sectorTerm.id])
         outputLog.push({
@@ -120,7 +96,7 @@ const updateTermStore = async (context, req) => {
         }
 
         // get sectionTerm
-        let sectionTerm = findTerm(termSetTerms, section.Seksjon)
+        let sectionTerm = findTermByLabel(termSetTerms, section.Seksjon)
         if (sectionTerm) {
           logger('debug', ['section', section.Seksjon, sectionTerm.id])
           outputLog.push({
@@ -184,7 +160,7 @@ const updateTermStore = async (context, req) => {
         for (const team of teams) {
           // handle teams
 
-          let teamTerm = findTerm(termSetTerms, team.Team)
+          let teamTerm = findTermByLabel(termSetTerms, team.Team)
           if (teamTerm) {
             logger('debug', ['team', team.Team, teamTerm.id])
             outputLog.push({
