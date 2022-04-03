@@ -62,7 +62,7 @@ const updateTermStore = async (context, req) => {
               })
             }
           } catch (err) {
-            logger('error', ['sector', sector.Sektor, 'failed to create sector term 😡', err.message])
+            logger('error', ['sector', sector.Sektor, 'failed to create sector term 😡', err.statusCode, err.message])
             outputLog.push({
               type: 'ERROR',
               sector: sector.Sektor,
@@ -131,7 +131,7 @@ const updateTermStore = async (context, req) => {
                 })
               }
             } catch (err) {
-              logger('error', ['section', section.Seksjon, 'failed to create section term 😡', err.message])
+              logger('error', ['section', section.Seksjon, 'failed to create section term 😡', err.statusCode, err.message])
               outputLog.push({
                 type: 'ERROR',
                 sector: sector.Sektor,
@@ -198,7 +198,7 @@ const updateTermStore = async (context, req) => {
                   })
                 }
               } catch (err) {
-                logger('error', ['team', team.Team, 'failed to create team term 😡', err.message])
+                logger('error', ['team', team.Team, 'failed to create team term 😡', err.statusCode, err.message])
                 outputLog.push({
                   type: 'ERROR',
                   sector: sector.Sektor,
