@@ -232,11 +232,17 @@ const updateTermStore = async (context, req) => {
       }
     }
   } catch (error) {
-    if (error instanceof HTTPError) return error.toJSON()
+    if (error instanceof HTTPError) {
+      logger('error', ['index', error.statusCode, error.message])
+      return error.toJSON()
+    }
+    const status = error.response?.status || 500
+    const errorBody = error.response?.data || error.data || error.message
+    logger('error', ['index', status, errorBody])
     return {
-      status: error.response?.status || 500,
+      status,
       body: {
-        error: error.response?.data || error.data || error.message
+        error: errorBody
       }
     }
   }
