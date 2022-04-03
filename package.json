@@ -1,6 +1,6 @@
 {
   "name": "azf-termstore",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Handle TermStore updates for VTFK",
   "scripts": {
     "test": "standard",
