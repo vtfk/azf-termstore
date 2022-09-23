@@ -2,6 +2,21 @@
 
 ## `POST /UpdateTerms`
 
+This API is called from a script where body contains all the terms used in the organization.
+
+`Flow:`
+1. Get all Terms from *Term Set* in SharePoint
+1. Loop through all *Sectors*
+    1. If *Sector* exists, move on
+    1. If *Sector* doesn't exist, create it with *Term Set* as root
+    1. Loop through all *Sections*
+        1. If *Section* exists, move on
+        1. If *Section* doesn't exist, create it with *Sector* as root
+            1. Loop through all *Teams*
+                1. If *Team* exists, move on
+                1. If *Team* doesn't exist, create it with *Section* as root
+1. Return all actions taken structured as log items. The calling script will use this response as actual logging saved to a log file on server
+
 **Add `?dummyRun=true` to do a WhatIf run**
 
 ### request
