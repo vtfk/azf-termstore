@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@vtfk/logger": "4.2.0",
-    "@vtfk/utilities": "1.1.0",
+    "@vtfk/utilities": "1.4.0",
     "axios": "0.26.1",
     "jsonwebtoken": "8.5.1",
     "qs": "6.10.5"
