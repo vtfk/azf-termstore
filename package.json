@@ -20,7 +20,7 @@
   ],
   "devDependencies": {
     "jest": "27.5.1",
-    "standard": "16.0.4"
+    "standard": "17.1.0"
   },
   "dependencies": {
     "@vtfk/logger": "4.2.0",
