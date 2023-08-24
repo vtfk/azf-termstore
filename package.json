@@ -19,7 +19,7 @@
     "graph"
   ],
   "devDependencies": {
-    "jest": "27.5.1",
+    "jest": "29.6.3",
     "standard": "16.0.4"
   },
   "dependencies": {
