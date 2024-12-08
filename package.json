@@ -23,7 +23,7 @@
     "standard": "16.0.4"
   },
   "dependencies": {
-    "@vtfk/logger": "4.2.0",
+    "@vtfk/logger": "5.0.2",
     "@vtfk/utilities": "1.1.0",
     "axios": "0.26.1",
     "jsonwebtoken": "8.5.1",
